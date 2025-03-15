@@ -71,29 +71,26 @@ export default function ArtistsSearch() {
           {SAMPLE_ARTISTS.map((artist) => (
             <div
               key={artist.id}
-              className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all hover:shadow-xl"
+              className="group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all hover:shadow-xl"
             >
-              <div className="relative h-64 w-full overflow-hidden">
+              <div className="aspect-h-9 aspect-w-16 relative">
                 <img
                   src={artist.image}
                   alt={artist.name}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-xl font-semibold text-white">{artist.name}</h3>
-                  <div className="mt-1 flex items-center text-gray-200">
-                    <MusicalNoteIcon className="mr-2 h-4 w-4" />
-                    {artist.genre}
-                  </div>
-                </div>
               </div>
-              <div className="flex flex-1 flex-col justify-between p-6">
-                <div className="flex items-center text-gray-600">
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900">{artist.name}</h3>
+                <div className="mt-2 flex items-center text-gray-600">
+                  <MusicalNoteIcon className="mr-2 h-5 w-5" />
+                  {artist.genre}
+                </div>
+                <div className="mt-2 flex items-center text-gray-600">
                   <UserGroupIcon className="mr-2 h-5 w-5" />
                   {artist.members} members • {artist.location}
                 </div>
-                <button className="mt-6 w-full rounded-lg bg-purple-600 px-4 py-2 text-white transition-colors hover:bg-purple-700">
+                <button className="mt-4 w-full rounded-lg bg-purple-600 px-4 py-2 text-white transition-colors hover:bg-purple-700">
                   View Profile
                 </button>
               </div>
