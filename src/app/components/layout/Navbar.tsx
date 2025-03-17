@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, Search, Music, MapPin } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 import { Dialog } from '@headlessui/react';
 
 const Navbar = () => {

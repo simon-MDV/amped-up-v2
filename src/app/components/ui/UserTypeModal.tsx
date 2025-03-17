@@ -1,108 +1,104 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Dialog } from '@headlessui/react';
-import { Music, Users, Building2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { Fragment, useEffect, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/app/context/AuthContext';
+import Link from 'next/link';
 
-const UserTypeModal = () => {
+export default function UserTypeModal() {
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-    // Check if user has made a selection in current session
     const hasSelectedType = sessionStorage.getItem('userType');
-    
-    // Show modal on fresh page load if not logged in and no selection in current session
-    if (!isLoggedIn && !hasSelectedType) {
+    if (!hasSelectedType && !isLoggedIn) {
       setIsOpen(true);
     }
-  }, []); // Only runs on mount (fresh page load)
+  }, [isLoggedIn]);
 
-  const handleSelection = (type: 'listener' | 'artist' | 'venue') => {
+  const handleSelectType = (type: string) => {
     sessionStorage.setItem('userType', type);
     setIsOpen(false);
-    router.push(`/${type}`);
   };
-
-  const handleClose = () => {
-    // Set default type for current session
-    sessionStorage.setItem('userType', 'listener');
-    setIsOpen(false);
-    router.push('/listener');
-  };
-
-  if (!isOpen) return null;
 
   return (
-    <Dialog
-      open={isOpen}
-      onClose={handleClose}
-      className="relative z-50"
-    >
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+    <Transition.Root show={isOpen} as={Fragment}>
+      <Dialog as="div" className="relative z-50" onClose={setIsOpen}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+        </Transition.Child>
 
-      <div className="fixed inset-0 flex items-center justify-center p-4">
-        <div className="mx-auto max-w-2xl rounded-2xl bg-white p-8">
-          <h2 className="text-2xl font-bold text-center text-gray-900 mb-4">
-            Welcome to AmpedUp!
-          </h2>
-          <p className="text-center text-gray-600 mb-8">
-            Tell us what brings you here today
-          </p>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
-            {/* Listener Option */}
-            <button
-              onClick={() => handleSelection('listener')}
-              className="flex flex-col items-center p-6 rounded-xl border-2 border-transparent bg-gray-50 hover:border-purple-600 transition-all duration-200"
+        <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Users className="h-12 w-12 text-purple-600 mb-4" />
-              <h3 className="font-semibold text-gray-900">Music Fan</h3>
-              <p className="mt-2 text-sm text-gray-500 text-center">
-                I'm looking for local live music
-              </p>
-            </button>
-
-            {/* Artist Option */}
-            <button
-              onClick={() => handleSelection('artist')}
-              className="flex flex-col items-center p-6 rounded-xl border-2 border-transparent bg-gray-50 hover:border-purple-600 transition-all duration-200"
-            >
-              <Music className="h-12 w-12 text-purple-600 mb-4" />
-              <h3 className="font-semibold text-gray-900">Artist</h3>
-              <p className="mt-2 text-sm text-gray-500 text-center">
-                I'm an artist or band looking to perform
-              </p>
-            </button>
-
-            {/* Venue Option */}
-            <button
-              onClick={() => handleSelection('venue')}
-              className="flex flex-col items-center p-6 rounded-xl border-2 border-transparent bg-gray-50 hover:border-purple-600 transition-all duration-200"
-            >
-              <Building2 className="h-12 w-12 text-purple-600 mb-4" />
-              <h3 className="font-semibold text-gray-900">Venue</h3>
-              <p className="mt-2 text-sm text-gray-500 text-center">
-                I represent a venue looking for talent
-              </p>
-            </button>
-          </div>
-
-          <div className="mt-8 flex justify-center">
-            <button
-              onClick={handleClose}
-              className="text-sm text-gray-500 hover:text-gray-700"
-            >
-              Continue as guest
-            </button>
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                <div className="absolute right-0 top-0 pr-4 pt-4">
+                  <button
+                    type="button"
+                    className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <span className="sr-only">Close</span>
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
+                <div className="sm:flex sm:items-start">
+                  <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                      Welcome to AmpedUp
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      <p className="text-sm text-gray-500">
+                        Please select your account type to get started
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse gap-4">
+                  <Link
+                    href="/listener"
+                    onClick={() => handleSelectType('listener')}
+                    className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:w-auto"
+                  >
+                    I&apos;m a Music Fan
+                  </Link>
+                  <Link
+                    href="/artist"
+                    onClick={() => handleSelectType('artist')}
+                    className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:w-auto"
+                  >
+                    I&apos;m an Artist
+                  </Link>
+                  <Link
+                    href="/venue"
+                    onClick={() => handleSelectType('venue')}
+                    className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:w-auto"
+                  >
+                    I&apos;m a Venue
+                  </Link>
+                </div>
+              </Dialog.Panel>
+            </Transition.Child>
           </div>
         </div>
-      </div>
-    </Dialog>
+      </Dialog>
+    </Transition.Root>
   );
-};
-
-export default UserTypeModal; 
+} 
