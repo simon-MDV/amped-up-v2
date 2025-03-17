@@ -1,5 +1,40 @@
 import Hero from './components/ui/Hero';
 import Link from 'next/link';
+import Image from 'next/image';
+import { CalendarDays, Clock, MapPin } from 'lucide-react';
+
+const FEATURED_EVENTS = [
+  {
+    id: 1,
+    title: 'Jazz Night at The Blue Room',
+    date: 'Mar 16',
+    time: '8:00 PM',
+    venue: 'The Blue Room',
+    location: 'New York, NY',
+    category: 'Jazz',
+    image: 'https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?q=80&w=2070'
+  },
+  {
+    id: 2,
+    title: 'Rock Revolution Festival',
+    date: 'Mar 23',
+    time: '7:30 PM',
+    venue: 'Soundwave Arena',
+    location: 'Los Angeles, CA',
+    category: 'Rock',
+    image: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=2070'
+  },
+  {
+    id: 3,
+    title: 'Electronic Music Night',
+    date: 'Mar 30',
+    time: '9:00 PM',
+    venue: 'The Neon Club',
+    location: 'Miami, FL',
+    category: 'Electronic',
+    image: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=2070'
+  }
+];
 
 export default function Home() {
   return (
@@ -18,32 +53,51 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Event Cards Placeholder */}
+          {/* Event Cards */}
           <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-12 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {[1, 2, 3].map((item) => (
+            {FEATURED_EVENTS.map((event) => (
               <div
-                key={item}
-                className="flex flex-col bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                key={event.id}
+                className="group relative h-[28rem] flex flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all hover:shadow-xl"
               >
-                <div className="h-48 w-full bg-gradient-to-r from-purple-500 to-pink-500" />
-                <div className="flex-1 p-6">
-                  <div className="flex items-center gap-x-4">
-                    <time className="text-sm leading-6 text-gray-600">Mar 16</time>
-                    <p className="rounded-full bg-gray-50 px-3 py-1 text-sm leading-6 text-gray-600">
-                      Live Music
-                    </p>
+                <div className="h-60 relative overflow-hidden">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="inline-flex items-center rounded-full bg-purple-600/90 px-3 py-1 text-sm text-white">
+                      {event.category}
+                    </div>
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold leading-6 text-gray-900">
-                    Jazz Night at The Blue Room
-                  </h3>
-                  <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600">
-                    Join us for an evening of smooth jazz featuring local artists and special guests.
-                  </p>
                 </div>
-                <div className="mt-4 border-t border-gray-900/5 px-6 py-4">
-                  <a href="#" className="text-sm font-semibold leading-6 text-purple-600 hover:text-purple-500">
-                    Learn more <span aria-hidden="true">→</span>
-                  </a>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+                      {event.title}
+                    </h3>
+                    <div className="mt-4 space-y-3">
+                      <div className="flex items-center text-sm text-gray-600">
+                        <CalendarDays className="mr-2 h-4 w-4 text-purple-600" />
+                        <span>{event.date} • {event.time}</span>
+                      </div>
+                      <div className="flex items-center text-sm text-gray-600">
+                        <MapPin className="mr-2 h-4 w-4 text-purple-600" />
+                        <span>{event.venue} • {event.location}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-6">
+                    <Link
+                      href={`/events/${event.id}`}
+                      className="block w-full rounded-lg bg-purple-600 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-purple-500 transition-colors"
+                    >
+                      Get Tickets
+                    </Link>
+                  </div>
                 </div>
               </div>
             ))}
