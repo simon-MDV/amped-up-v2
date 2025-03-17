@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+import Image from 'next/image';
 import { MagnifyingGlassIcon, CalendarIcon, MapPinIcon, TicketIcon } from '@heroicons/react/24/outline';
 
 const SAMPLE_EVENTS = [
@@ -77,10 +81,12 @@ export default function EventsSearch() {
               className="group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all hover:shadow-xl"
             >
               <div className="aspect-h-9 aspect-w-16 relative">
-                <img
+                <Image
                   src={event.image}
                   alt={event.name}
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={300}
+                  height={200}
+                  className="w-full h-48 object-cover rounded-t-lg"
                 />
                 <div className="absolute top-4 right-4 rounded-full bg-purple-600 px-3 py-1 text-sm font-medium text-white">
                   {event.price}

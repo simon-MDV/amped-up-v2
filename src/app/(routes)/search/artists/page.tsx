@@ -3,6 +3,7 @@
 import { MagnifyingGlassIcon, MusicalNoteIcon, UserGroupIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/app/context/AuthContext';
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 
 const SAMPLE_ARTISTS = [
   {
@@ -100,10 +101,12 @@ export default function ArtistsSearch() {
               className="group h-[28rem] flex flex-col overflow-hidden rounded-2xl bg-white shadow-md transition-all hover:shadow-xl"
             >
               <div className="h-60 w-full relative overflow-hidden">
-                <img
+                <Image
                   src={artist.image}
                   alt={artist.name}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={300}
+                  height={200}
+                  className="w-full h-48 object-cover rounded-t-lg"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">

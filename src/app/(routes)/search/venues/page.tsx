@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+import Image from 'next/image';
 import { MagnifyingGlassIcon, MapPinIcon, MusicalNoteIcon } from '@heroicons/react/24/outline';
 
 const SAMPLE_VENUES = [
@@ -74,10 +78,12 @@ export default function VenuesSearch() {
               className="group relative overflow-hidden rounded-2xl bg-white shadow-md transition-all hover:shadow-xl"
             >
               <div className="aspect-h-9 aspect-w-16 relative">
-                <img
+                <Image
                   src={venue.image}
                   alt={venue.name}
-                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={300}
+                  height={200}
+                  className="w-full h-48 object-cover rounded-t-lg"
                 />
               </div>
               <div className="p-6">

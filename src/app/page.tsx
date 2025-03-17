@@ -1,7 +1,8 @@
 import Hero from './components/ui/Hero';
 import Link from 'next/link';
 import Image from 'next/image';
-import { CalendarDays, Clock, MapPin } from 'lucide-react';
+import { CalendarDays, MapPin } from 'lucide-react';
+import { CalendarIcon, MapPinIcon, TicketIcon } from '@heroicons/react/24/outline';
 
 const FEATURED_EVENTS = [
   {

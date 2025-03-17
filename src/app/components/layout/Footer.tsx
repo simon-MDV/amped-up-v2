@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Music, Building2, Calendar, Users } from 'lucide-react';
+import { Music, Users, Building2 } from 'lucide-react';
 
 const Footer = () => {
   return (
