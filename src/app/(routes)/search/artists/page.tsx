@@ -1,7 +1,6 @@
 'use client';
 
 import { MagnifyingGlassIcon, UserGroupIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
-import { useAuth } from '@/app/context/AuthContext';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
@@ -48,7 +47,6 @@ const GENRES = ['All Genres', 'Rock', 'Jazz', 'Pop', 'Electronic', 'Hip Hop', 'C
 const GROUP_SIZES = ['Any Size', 'Solo', 'Duo', '3-4', '5+'];
 
 export default function ArtistsSearch() {
-  const { isLoggedIn } = useAuth();
   const [isListener, setIsListener] = useState(false);
 
   useEffect(() => {
