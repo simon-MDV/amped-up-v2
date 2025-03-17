@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { MagnifyingGlassIcon, CalendarIcon, MapPinIcon, TicketIcon } from '@heroicons/react/24/outline';
 

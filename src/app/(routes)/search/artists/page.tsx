@@ -1,6 +1,6 @@
 'use client';
 
-import { MagnifyingGlassIcon, MusicalNoteIcon, UserGroupIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, UserGroupIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { useAuth } from '@/app/context/AuthContext';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
