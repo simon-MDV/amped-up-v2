@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Search, MapPin, Music } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Hero = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,7 +81,7 @@ const Hero = () => {
         <div className="mt-24">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {/* Discover Artists Card */}
-            <div className="relative group">
+            <Link href="/search/artists" className="relative group">
               <div className="relative h-80 w-full overflow-hidden rounded-lg bg-white shadow-lg group-hover:shadow-xl transition-all duration-300">
                 <Image
                   src="https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070"
@@ -88,16 +89,19 @@ const Hero = () => {
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-lg font-semibold text-white">DISCOVER ARTISTS</h3>
+                  <h3 className="text-xl font-semibold text-white">DISCOVER ARTISTS</h3>
                   <p className="mt-2 text-sm text-gray-200">Find talented musicians and bands in your area</p>
+                  <button className="mt-4 w-full rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-purple-500">
+                    Browse Artists
+                  </button>
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Explore Venues Card */}
-            <div className="relative group">
+            <Link href="/search/venues" className="relative group">
               <div className="relative h-80 w-full overflow-hidden rounded-lg bg-white shadow-lg group-hover:shadow-xl transition-all duration-300">
                 <Image
                   src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=2070"
@@ -105,16 +109,19 @@ const Hero = () => {
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-lg font-semibold text-white">EXPLORE VENUES</h3>
+                  <h3 className="text-xl font-semibold text-white">EXPLORE VENUES</h3>
                   <p className="mt-2 text-sm text-gray-200">Browse local venues looking for performers</p>
+                  <button className="mt-4 w-full rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-purple-500">
+                    Find Venues
+                  </button>
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Upcoming Events Card */}
-            <div className="relative group">
+            <Link href="/search/events" className="relative group">
               <div className="relative h-80 w-full overflow-hidden rounded-lg bg-white shadow-lg group-hover:shadow-xl transition-all duration-300">
                 <Image
                   src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=2070"
@@ -122,13 +129,16 @@ const Hero = () => {
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <h3 className="text-lg font-semibold text-white">UPCOMING EVENTS</h3>
+                  <h3 className="text-xl font-semibold text-white">UPCOMING EVENTS</h3>
                   <p className="mt-2 text-sm text-gray-200">Find live music events happening near you</p>
+                  <button className="mt-4 w-full rounded-lg bg-purple-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-purple-500">
+                    View Events
+                  </button>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

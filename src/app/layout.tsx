@@ -3,13 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import UserTypeModal from "./components/ui/UserTypeModal";
-import { AuthProvider } from "./context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AmpedUp - Find and Book Live Music",
+  title: "AmpedUp - Book Live Music Talent",
   description: "Connect with local venues and artists. Book performances or discover upcoming live music events near you.",
 };
 
@@ -19,14 +17,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full">
-      <body className={`${inter.className} h-full flex flex-col`}>
-        <AuthProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <div className="min-h-screen flex flex-col">
           <Navbar />
-          <main className="flex-grow pt-16">{children}</main>
+          <main className="flex-grow pt-[72px]">{children}</main>
           <Footer />
-          <UserTypeModal />
-        </AuthProvider>
+        </div>
       </body>
     </html>
   );

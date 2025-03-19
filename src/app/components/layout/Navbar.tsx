@@ -1,12 +1,40 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-import { Menu, Search } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Menu, Search, Music, Building2, User, ChevronDown } from 'lucide-react';
 import { Dialog } from '@headlessui/react';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userType, setUserType] = useState<string | null>(null);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const savedUserType = sessionStorage.getItem('userType');
+    if (savedUserType) {
+      setUserType(savedUserType);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleUserTypeSelect = (type: string) => {
+    sessionStorage.setItem('userType', type);
+    setUserType(type);
+  };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-white border-b border-gray-200">
@@ -31,25 +59,41 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:gap-x-12">
+        <div className="hidden lg:flex lg:gap-x-8">
           <Link
             href="/search/venues"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-purple-600"
+            className="text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors"
           >
             Find Venues
           </Link>
           <Link
             href="/search/artists"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-purple-600"
+            className="text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors"
           >
             Discover Artists
           </Link>
           <Link
             href="/search/events"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-purple-600"
+            className="text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors"
           >
             Upcoming Events
           </Link>
+          <button
+            onClick={() => handleUserTypeSelect('artist')}
+            className={`text-sm font-medium transition-colors ${
+              userType === 'artist' ? 'text-purple-600' : 'text-gray-700 hover:text-purple-600'
+            }`}
+          >
+            For Artists
+          </button>
+          <button
+            onClick={() => handleUserTypeSelect('venue')}
+            className={`text-sm font-medium transition-colors ${
+              userType === 'venue' ? 'text-purple-600' : 'text-gray-700 hover:text-purple-600'
+            }`}
+          >
+            For Venues
+          </button>
         </div>
 
         {/* Search Bar */}
@@ -64,20 +108,39 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Auth Buttons */}
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
-          <Link
-            href="/login"
-            className="inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold text-gray-900 hover:text-purple-600"
-          >
-            Log in
-          </Link>
-          <Link
-            href="/signup"
-            className="inline-flex items-center justify-center rounded-full bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-500"
-          >
-            Sign up
-          </Link>
+        {/* User Menu */}
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <div className="relative" ref={userMenuRef}>
+            <button
+              onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+              className="inline-flex items-center gap-2 rounded-full border border-gray-200 p-2.5 text-gray-700 hover:shadow-md hover:border-gray-300 transition-all cursor-pointer"
+            >
+              <User className="h-6 w-6 cursor-pointer" />
+              <div className="flex flex-col gap-1.5 cursor-pointer">
+                <div className="h-[2px] w-4 bg-gray-600 rounded-full"></div>
+                <div className="h-[2px] w-4 bg-gray-600 rounded-full"></div>
+                <div className="h-[2px] w-4 bg-gray-600 rounded-full"></div>
+              </div>
+            </button>
+
+            {/* Dropdown Menu */}
+            {isUserMenuOpen && (
+              <div className="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5">
+                <Link
+                  href="/login"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                >
+                  Log in
+                </Link>
+                <Link
+                  href="/signup"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                >
+                  Sign up
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </nav>
 
@@ -103,33 +166,49 @@ const Navbar = () => {
               <div className="space-y-2 py-6">
                 <Link
                   href="/search/venues"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50"
                 >
                   Find Venues
                 </Link>
                 <Link
                   href="/search/artists"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50"
                 >
                   Discover Artists
                 </Link>
                 <Link
                   href="/search/events"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50"
                 >
                   Upcoming Events
                 </Link>
+                <button
+                  onClick={() => handleUserTypeSelect('artist')}
+                  className={`-mx-3 block rounded-lg px-3 py-2 text-base font-medium w-full text-left ${
+                    userType === 'artist' ? 'text-purple-600 bg-purple-50' : 'text-gray-900 hover:bg-gray-50'
+                  }`}
+                >
+                  For Artists
+                </button>
+                <button
+                  onClick={() => handleUserTypeSelect('venue')}
+                  className={`-mx-3 block rounded-lg px-3 py-2 text-base font-medium w-full text-left ${
+                    userType === 'venue' ? 'text-purple-600 bg-purple-50' : 'text-gray-900 hover:bg-gray-50'
+                  }`}
+                >
+                  For Venues
+                </button>
               </div>
               <div className="py-6">
                 <Link
                   href="/login"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50"
                 >
                   Log in
                 </Link>
                 <Link
                   href="/signup"
-                  className="mt-2 -mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white bg-purple-600 hover:bg-purple-500"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50"
                 >
                   Sign up
                 </Link>
