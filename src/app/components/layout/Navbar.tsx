@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
-import { Menu, Search, Music, Building2, User, ChevronDown } from 'lucide-react';
+import { Menu, Search, User } from 'lucide-react';
 import { Dialog } from '@headlessui/react';
 
 const Navbar = () => {
