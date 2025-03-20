@@ -6,6 +6,7 @@ interface AuthContextType {
   isLoggedIn: boolean;
   login: () => void;
   logout: () => void;
+  signIn: (email: string, password: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -29,8 +30,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoggedIn(false);
   };
 
+  const signIn = async (email: string, password: string) => {
+    // Add your authentication logic here
+    localStorage.setItem('auth_token', 'dummy_token');
+    setIsLoggedIn(true);
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, signIn }}>
       {children}
     </AuthContext.Provider>
   );
